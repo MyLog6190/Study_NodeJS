@@ -1,0 +1,19 @@
+doctype html
+html(lang="ko")
+    //- 
+        extends
+        - 상속을 받아 부모 데이터를 그대로 가져다 쓴다
+        
+        block
+        - 상속 받은 곳에서 block 부분에서 다른 내용으로 채워 줄수 있음
+        - extends base.pug
+        - block head
+            h1 head
+        - block content
+            h1 content
+    head 
+        block head
+    body 
+        block content
+    include partials/footer.pug
+    

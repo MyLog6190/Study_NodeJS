@@ -1,0 +1,18 @@
+express
+- https://www.npmjs.com/에서 package검색창에 express를 검색
+
+- terminal에 express 다운 코드를 입력
+  - npm i express
+
+- express 다운 받으면 
+  node_modules folder와
+  package-lock.json file이 생성
+
+- express를 다운 받을 때
+  node_modules express folder에 
+  package.json dependencies에 있는
+  package들도 같이 다운 받아진다
+
+- dependencies에 있는 package는 express를
+  실행할 때 반드시 필요한 packages
+

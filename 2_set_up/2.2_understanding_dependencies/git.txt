@@ -1,0 +1,17 @@
+github 
+- github 추가 방법
+- visual code terminal 창에 
+- git init 입력 후
+  git remote add origin (github url) 입력
+- ex)
+  - git init
+  - git remote add origin https://github.com/MyLog6190/youtube-reloaded
+
+.gitignore
+- github에 upload할 file중에 제외할 file을 적는다
+- 방법
+  - .gitignore file을 생성
+  - .gitignore file에 제외할 file이름을 적는다.
+    /file_name
+  - ex)
+    - /node_modules

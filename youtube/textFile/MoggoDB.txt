@@ -1,0 +1,82 @@
+MoggoDB
+- mongodb.com
+- 일반적인 DB는 SQL Base지만 
+  MonggoDB는 document-based
+
+- 다운 방법)
+  - moggodb.com -> Resources -> sever 
+    -> install MoggoDB Community Edition -> linux
+  - terminal창에 다운코드 입력
+    - sudo apt-get install gnupg
+    - wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+    - echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+    - sudo apt-get update
+    - sudo apt-get install -y mongodb-org
+
+- Illegal instruction (core dumped) 오류 생겼을 때)
+  - 오류 이유)
+    - 왜 생기는지 이유는 모름
+  
+  - 해결 방법)
+    - 4.4버전으로 다운 받으면 됨
+
+  - 4.4 다운 방법)
+    - wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+    - echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+    - sudo apt-get update
+    - sudo apt-get install -y mongodb-org=4.4.13 mongodb-org-server=4.4.13 mongodb-org-shell=4.4.13 mongodb-org-mongos=4.4.13 mongodb-org-tools=4.4.13
+
+- 삭제 방법)
+  - sudo service mongod stop
+  - sudo apt-get purge mongodb-org*
+  - sudo rm -r /var/log/mongodb
+  - sudo rm -r /var/lib/mongodb
+
+  - 남아 있는 pakage 확인
+    - sudo apt list --installed | grep mongo
+  
+  - 남아 있는 pakage 제거
+    - sudo apt-get --purge remove mongodb-database-tools
+    - sudo apt-get --purge remove mongodb-mongosh/focal
+
+- 실행 방법)
+  - terninal창에 mongod 입력
+  - mongod 입력 후 mongo를 입력
+
+- Error: couldn't connect to server 127.0.0.1:27017, 
+  connection attempt failed: 
+  SocketException: Error connecting to 127.0.0.1:27017 
+  :: caused by :: Connection refused :
+  - terminal 창에서 mongo를 입력하면 생기는 오류
+  - terminal 창에서 mongod를 먼저 실행
+
+- exception ing initAndListen: NonExistentPath: Data directory /data/db not found
+  - terminal창에 mongod를 실행 했을 때 생긴 오류
+  
+  - 해결 방법)
+    - 방법 1)
+      - Create the missing directoy 
+      - 누락된 경로를 생성
+
+    - 방법 2)
+      - Specify another path using the --dbpath command line option
+      - --dbpath command line option을 사용하여 다른 경로를 지정 
+
+    - 방법 3)
+      - Adding the "storage.dbPath option in the configuration file", 
+        termiating
+      - configuration file안에 storage.dbpath option을 추가
+    
+    - 1번 방법을 사용하여 누락된 경로를 생성
+      - sudo mkdir -p /data/db
+
+- Operation: Attempted to create a lock file on a read-only directory: /data/db"}}
+  - /data/db file을 생성하고 mongod를 입력하니 생긴 오류
+  - 일기 전용 diretory: /data/db에서 lock file을 생성하려고 시도 했다는 오류가 뜸
+  
+  - 해결 방법)
+    - MongoDB가 /data/db에 사용 할 수 있도록 권한을 부여
+    - sudo chmod -R go+w /data/db
+    - sudo chown -R $USER /data/db
+
+  

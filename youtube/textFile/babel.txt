@@ -1,0 +1,47 @@
+BABEL
+- https://babeljs.io/
+- JavaScript 컴파일러
+- NodeJS는 JavaScript를 이해하지만 
+  최신 JavaScript코드는 이해하지 못 한다.
+  NodeJS가 이해하지 못하는 JavaScript최신 코드를 
+  NodeJS가 이해 할 수 있도록 도와준다.
+- terminal에 babel다운 코드를 입력
+  - npm install --save-dev @babel/core
+- babel를 다운 받으면 자동으로 package.json devDependencies에
+  babel 모듈이 기술됨
+- 다운 코드에 --save-dev를 제거하면 dependencies에 기술된다.
+
+babel setting file
+- https://babeljs.io/setup#installation 4번 설명 그대로 하면됨
+- terminal창에 touch babel.config.json에 입력하여
+  babel 설정 파일을 생성 윈도우는 직접 파일 생성하면 된다.
+- npm install @babel/preset-env --save-dev 다운 받고
+- 생성한 설정 파일에 밑에 코드를 입력
+  {
+    "presets": ["@babel/preset-env"]
+  }
+- preset은 babel을 위한 플러그인
+- preset을 사용하면 JavaScript최신코드를 사용할 수 있음
+
+Nodemon
+- @babel/node
+  - JavaScript에 babel을 직접 추가하지 않고
+    package.json script에서 사용하기 위해 사용
+  - 다운코드 npm install @babel/node --save-dev
+  - 사용 방법
+    - 실행 파일에 babel-node를 붙이면 됨
+    - "scripts": {
+        "dev": "babel-node index.js"
+      }
+    - 실행할 파일 앞에 babel-node를 적는다.
+
+- Nodemon
+  - code를 변경할 때마다 npm run 명령어를 사용해야 하는데
+    nodemon은 파일이 수정되면 서버를 자동으로 재시작 해줌 
+  - 다운 코드 npm i nodemon --save-dev
+  - 사용방법
+    - 실행 파일 앞에 nodemon을 붙인다
+    - "scripts": {
+        "dev": "nodemon --exec babel-node index.js"
+      }
+  

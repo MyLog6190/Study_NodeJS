@@ -1,0 +1,8 @@
+github 
+- github 추가 방법
+- visual code terminal 창에 
+- git init 입력 후
+  git remote add origin (github url) 입력
+- ex)
+  - git init
+  - git remote add origin https://github.com/MyLog6190/youtube-reloaded

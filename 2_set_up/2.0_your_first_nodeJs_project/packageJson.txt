@@ -1,0 +1,10 @@
+json
+- 프로그래머가 파일에 정보를 저장하기 위해 만든 방식 중 하나
+- 파일에 정보를 입력하는 방법이라 생각하면 됨
+- nodeJS인 경우 파일 이름이 반드시 package.json 지어야 함
+
+package.json
+- nodeJS 프로젝트를 만들 때 가장 먼저 만들어야 할 파일
+- terminal창에 npm init을 입력하면 package.json을 자동으로 생성해 줌
+
+
