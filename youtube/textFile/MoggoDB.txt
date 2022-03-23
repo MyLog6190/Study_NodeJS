@@ -79,4 +79,8 @@ MoggoDB
     - sudo chmod -R go+w /data/db
     - sudo chown -R $USER /data/db
 
+- DB Error MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+  - DB와 연결이 안되는 오류
+  - terminal창에서 mongod를 실행 시킨후 다시 실행
+  
   

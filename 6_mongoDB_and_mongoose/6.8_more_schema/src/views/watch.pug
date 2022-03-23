@@ -1,0 +1,17 @@
+extends base.pug
+
+block content 
+    h3 #{video.views} #{video.views === 1 ? "view" : "views"}
+    //- 
+        href
+        - absoulte url
+          - href값에 /를 넣으면 현재 url 경로가 어디든 상관 없이
+            경로가 root + /경로
+          - 현재 url : localhost4000/videos/1/info
+          - href="/edit" -> localhost4000/edit
+        
+        - relative url
+          - href값에 /가 없으면 현재 url 마지막쪽에 붙음
+          - 현재 url : localhost4000/videos/1/info 
+          - href="edit" -> localhost4000/videos/1/edit  
+    a(href=`${video.id}/edit`) Edit Video &rarr;
