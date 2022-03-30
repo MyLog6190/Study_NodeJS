@@ -13,6 +13,10 @@ MoggoDB
     - sudo apt-get update
     - sudo apt-get install -y mongodb-org
 
+- 실행 방법)
+    - terninal창에 mongod 입력
+    - mongod 입력 후 mongo를 입력
+
 - Illegal instruction (core dumped) 오류 생겼을 때)
   - 오류 이유)
     - 왜 생기는지 이유는 모름
@@ -26,11 +30,11 @@ MoggoDB
     - sudo apt-get update
     - sudo apt-get install -y mongodb-org=4.4.13 mongodb-org-server=4.4.13 mongodb-org-shell=4.4.13 mongodb-org-mongos=4.4.13 mongodb-org-tools=4.4.13
 
-- 삭제 방법)
-  - sudo service mongod stop
-  - sudo apt-get purge mongodb-org*
-  - sudo rm -r /var/log/mongodb
-  - sudo rm -r /var/lib/mongodb
+  - 삭제 방법)
+    - sudo service mongod stop
+    - sudo apt-get purge mongodb-org*
+    - sudo rm -r /var/log/mongodb
+    - sudo rm -r /var/lib/mongodb
 
   - 남아 있는 pakage 확인
     - sudo apt list --installed | grep mongo
@@ -39,10 +43,7 @@ MoggoDB
     - sudo apt-get --purge remove mongodb-database-tools
     - sudo apt-get --purge remove mongodb-mongosh/focal
 
-- 실행 방법)
-  - terninal창에 mongod 입력
-  - mongod 입력 후 mongo를 입력
-
+  
 - Error: couldn't connect to server 127.0.0.1:27017, 
   connection attempt failed: 
   SocketException: Error connecting to 127.0.0.1:27017 

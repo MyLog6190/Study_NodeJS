@@ -1,0 +1,67 @@
+Git OAuth App
+- https://github.com/
+- setting -> developer settings -> new OAuth app
+- OAuth App 생성 후 Client ID와 Client secrets 얻을 수 있음
+- Authorization callback URL 설정 할 수 있다
+
+Github login
+방법)
+    - https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps
+    - The web application flow to authorize users for your app is
+        - Users are redirected to request their GitHub identity
+        - Users are redirected back to your site by GitHub
+        - Your app accesses the API with the user's access token
+
+    - Request a user's GitHub identity
+        - GET https://github.com/login/oauth/authorize
+
+    - Users are redirected back to your site by GitHub
+        - POST https://github.com/login/oauth/access_token
+
+
+    
+    - URL에 Pameter를 통해 필요한 Request를 보낸다.
+        - https://github.com/login/oauth/authorize
+            - 이곳으로 필요한 파라미터를 넣어 request를 보낸다
+            - https://github.com/login/oauth/authorize?client_id=clientId&scope=read:user
+
+            - resquest parameter
+                - client_id
+                    - OAuth App에서 생성한 client_id값이 반드시 필요하다
+                    - ?client_id=clientId
+
+                - scope
+                    - user에게 어떤 정보를 받아 올 것인지 정한다
+                    - read:user -> github prodile 정보 
+                    - user:email -> 유저 email 정보
+                    - ?scope=read:user
+        
+        - redirect를 통해 request를 요청하면 OAuth App생성할 때 설정한 Authorization callback URL로
+          이동한다
+    
+    - Authorization callback URL 이동 후
+        - code 
+    
+Error [ERR_REQUIRE_ESM]: require() of ES Module not supported 오류
+- 해결방법)
+    - 방법 1)
+        - node-fetch 3버전이 아닌 2버전으로 다운그레이드된 버전을 설치해서 해결할 수 있습니다.
+        - npm i node-fetch@2.6.1 (강의와 같은 버전)
+
+    - 방법 2) 
+        - cross-fetch 사용 (CommonJS, ES6 모듈, Typescript등에서도 사용가능)
+        - node-fetch대신 사용할 수 있는 cross-fetch 패키지를 통해 해결할 수 있습니다. 
+        - node-fetch와 사용법은 동일합니다.
+        - Node, 브라우저 및 React Native용 범용 WHATWG Fetch API.
+        - npm i cross-fetch
+
+FetchError: invalid json response body
+- reason: Unexpected token a in JSON at position 0
+- fetch request의 property 이름이 정확하지 않아 생긴 오류
+- const data = await fetch(finalUrl, {
+    method: "POST",
+    header: {
+        Accept: "application/json",
+    },
+  });
+ - header를 headers로 바꾸면 오류 해결 

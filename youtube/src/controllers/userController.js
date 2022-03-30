@@ -1,4 +1,5 @@
 import User from "../models/User";
+import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
@@ -50,12 +51,12 @@ export const postJoin = async (req, res) => {
 };
 
 export const getLogin = (req, res) =>
-  res.render("login", { pateTitle: "Login" });
+  res.render("login", { pageTitle: "Login" });
 
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
 
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username, socialOnly: false });
   if (!user) {
     return res.status(400).render("login", {
       pageTitle: "Login",
@@ -76,7 +77,143 @@ export const postLogin = async (req, res) => {
   res.redirect("/");
 };
 
-export const edit = (req, res) => res.send("Edit User");
+export const startGithubLogin = (req, res) => {
+  const config = {
+    client_id: process.env.GH_CLIENT,
+    allow_signup: false,
+    scope: "read:user user:email",
+  };
+
+  const baseUrl = "https://github.com/login/oauth/authorize";
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+  res.redirect(finalUrl);
+};
+
+export const finishGithubLogin = async (req, res) => {
+  const baseUrl = "https://github.com/login/oauth/access_token";
+  const config = {
+    client_id: process.env.GH_CLIENT,
+    client_secret: process.env.GH_SECRET,
+    code: req.query.code,
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+
+  /*
+    fetch
+    - fetch는 browser에서 사용하고 nodeJS에서 사용하고 싶다면
+    - node-fetch package를 다운 받는다.
+    - https://www.npmjs.com/package/node-fetch
+      - npm i node-fetch
+    - url(다른 server)에 request를 보내고 data를 받아 오는데 사용
+    - 
+  */
+  const tokenRequest = await (
+    await fetch(finalUrl, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+  ).json();
+
+  if ("access_token" in tokenRequest) {
+    // access api
+    const apiUrl = "https://api.github.com";
+    const { access_token } = tokenRequest;
+    const userRequest = await (
+      await fetch(`${apiUrl}/user`, {
+        headers: {
+          Authorization: `token ${access_token}`,
+        },
+      })
+    ).json();
+    console.log(userRequest);
+
+    const emailData = await (
+      await fetch(`${apiUrl}/user/emails`, {
+        headers: {
+          Authorization: `token ${access_token}`,
+        },
+      })
+    ).json();
+    console.log(emailData);
+
+    const emailObj = emailData.find(
+      (email) => email.primary === true && email.verified === true
+    );
+
+    if (!emailObj) {
+      return res.redirect("/login");
+    }
+
+    let user = await User.findOne({ email: emailObj.email });
+
+    if (user) {
+      req.session.loggedIn = true;
+      req.session.user = user;
+      return res.redirect("/");
+    }
+
+    user = await User.create({
+      name: userRequest.name ? userRequest.name : "No Name",
+      avatarUrl: userRequest.avatar_url,
+      username: userRequest.login,
+      email: emailObj.email,
+      password: "",
+      socialOnly: true,
+      location: userRequest.location,
+    });
+
+    req.session.loggedIn = true;
+    req.session.user = user;
+
+    return res.redirect("/");
+  } else {
+    return res.redirect("/login");
+  }
+};
+
+export const getEdit = (req, res) => {
+  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+};
+export const postEdit = async (req, res) => {
+  // const i = req.session.user.id
+  // const { name, username, email, location } = req.body;
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { name, username, email, location },
+  } = req;
+
+  const updatedUser = await User.findOneAndUpdate(
+    _id,
+    {
+      name: name,
+      email: email,
+      username: username,
+      location: location,
+    },
+    { new: true }
+  );
+
+  req.session.user = updatedUser;
+  return res.redirect("/users/edit");
+};
 export const remove = (req, res) => res.send("Remove User");
-export const logout = (req, res) => res.send("Log Out");
+export const logout = (req, res) => {
+  req.session.destroy();
+  res.redirect("/");
+};
+
+export const getChangePassword = (req, res) => {
+  return res.render("users/change-password", { pageTitle: "Change Password" });
+};
+
+export const postChangePassword = (req, res) => {
+  return res.redirect("/users/my-profile");
+};
+
 export const see = (req, res) => res.send("See");

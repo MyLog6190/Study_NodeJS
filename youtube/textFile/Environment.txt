@@ -1,0 +1,23 @@
+Environmnet
+- .env file 생성
+- .gitignore에 .env 추가
+- dotenv 설치/적용
+- 보안에 필요한 String 값은 process.env로 바꿔준다
+
+dotenv
+- env file을 읽고 env안에 변수들을 
+  process.env에 넣는다
+
+- 설치 방법)
+  - https://www.npmjs.com/package/dotenv
+  - npm i dotenv
+
+- 사용 방법)
+  - 방법 1)
+    - dotenv를 사용하는 곳에 전부 사용 코드를 넣어준다.
+    - require('dotenv').config()
+  
+  - 방법 2)
+    - import "dotenv/config";
+    - 맨 윗줄에 import하면 아래에 import된 file에 전부 적용된다
+

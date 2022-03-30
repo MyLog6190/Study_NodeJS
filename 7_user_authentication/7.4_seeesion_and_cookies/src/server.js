@@ -24,18 +24,29 @@ app.use(express.urlencoded({ extended: true }));
       - npm i express-session
     - session은 router가 실행되기 전에 사용한다.
     - session을 session 알아서 벡엔드 쿠키로 보내도록 되어있음
-      - session data를 cookie에 넣어준다
+      - session Id를 cookie에 넣어준다
       - cookie는 request header에 들어가 있다.      
     - session안에 data를 넣어 줄 수 있다.
     - session은 sever가 재시작 되면 초기화 된다.
+
+    cookie
+    - server가 browser에서 주는 정보
+    - server에 request를 할 때마다 browser가 request에 cookie를 덧 붙인다
+
 */
 
 // 방문한 web site에 session middleware가 있으면
-// express가 알아서 session id를 만들고 browser에세 보내준다.
+// express가 알아서 session id를 만들고 browser에게 보내준다.
 // browser에서 session id를 cookie에 저장하고
 // express에서도 session id을 session db에 저장하여
 // session db에 id와 cookie에 저장한 id가 같도록 해준다
 // browser가 url요청을 보낼 때마다 session id요청도 함께 보내준다
+/*
+ Session Middleware
+ - session이라는 middleware가 browser에 cookie를 전송
+ - session ID를 cookie에 저장한다.
+ - id를 제외한 data들은 server에 저장됨
+*/
 app.use(
   session({
     secret: "Hello",
