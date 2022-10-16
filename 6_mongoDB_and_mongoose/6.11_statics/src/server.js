@@ -1,5 +1,3 @@
-// server에 mongo를 import하면 mongo가 server에 바로 연결 된다
-
 import express from "express";
 import morgan from "morgan";
 import globalRouter from "./routers/globalRouter";

@@ -16,6 +16,7 @@ export const postJoin = async (req, res) => {
         - res.status(404)
         - 404 코드는 잘못된 request요구에 발생하는 코드 
   */
+
   if (password !== password2) {
     return res.status(400).render("join", {
       pageTitle,
@@ -40,6 +41,7 @@ export const postJoin = async (req, res) => {
   });
   res.redirect("/login");
 };
+
 export const edit = (req, res) => res.send("Edit User");
 export const remove = (req, res) => res.send("Remove User");
 export const login = (req, res) => res.send("Log In");

@@ -7,5 +7,6 @@ block content
         input(name="email", type="email", placeholder="Email", value=loggedInUser.email, required)
         input(name="location", type="text", placeholder="Location", value=loggedInUser.location)
         input(type="submit", value="Updata Profile")
-        hr
-        a(href="change-password") Change Password &rarr;
+        if !loggedInUser.socialOnly
+            hr
+            a(href="change-password") Change Password &rarr;

@@ -5,7 +5,7 @@ export const home = (req, res) => {
     Callback
     - 무언가 실행되면 그 다음으로 실행되는 것
     - app.listen(PORT, function)
-      - app.listrn(PORT)가 먼저 발생 되면
+      - app.listen(PORT)가 먼저 발생 되면
         다음으로 fucntion이 실행됨
 
     Database 에서 data 받아오는 방법
